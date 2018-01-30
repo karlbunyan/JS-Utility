@@ -1,6 +1,6 @@
 /*
  * JavaScript utility functions
- * version 0.0.1
+ * version 0.0.2
  * Released under the MIT license.
  *
  * karl@wedugames.com
@@ -82,6 +82,10 @@ String.prototype.toUnderscore = function(){
 	return this.replace(/([A-Z])/g, function($1){return "_"+$1.toLowerCase();});
 };
 
+String.prototype.toFixed = function(){
+	return parseFloat(this).toFixed(2);
+}
+
 if (!String.prototype.trim) {
 	String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
 }
@@ -113,6 +117,22 @@ String.prototype.nameValuePairs = function(){
 	}
 	return out;
 };
+
+Date.prototype.addDays = function(days) {
+	var date = new Date(this.valueOf());
+	date.setDate(date.getDate() + days);
+	return date;
+}
+
+Date.prototype.addMonths = function(months) {
+	var date = new Date(this.valueOf());
+	date.setMonth(date.getMonth() + months);
+	return date;
+}
+
+Date.prototype.getDaysInMonth = function(months) {
+	return 32 - new Date(this.getYear(), this.getMonth(), 32).getDate();
+}
 
 if (typeof Object.create === 'undefined') {
 	Object.create = function (o) {
