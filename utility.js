@@ -118,6 +118,19 @@ String.prototype.nameValuePairs = function(){
 	return out;
 };
 
+if (!String.prototype.format) {
+	String.prototype.format = function() {
+		var args = arguments;
+		return this.replace(/{(\d+)}/g, function(match, number) {
+			return typeof args[number] != 'undefined' ? args[number] : match;
+		});
+	};
+}
+
+String.prototype.pluralise = function(val){
+	return this.valueOf() + (val == 1 ? '' : 's');
+}
+
 Date.prototype.addDays = function(days) {
 	var date = new Date(this.valueOf());
 	date.setDate(date.getDate() + days);
@@ -133,6 +146,17 @@ Date.prototype.addMonths = function(months) {
 Date.prototype.getDaysInMonth = function(months) {
 	return 32 - new Date(this.getYear(), this.getMonth(), 32).getDate();
 }
+
+(function(){
+	var seed = Math.random();
+	Math.seeded = function() {
+		var x = Math.sin(seed++) * 10000;
+		return x - Math.floor(x);
+	};
+	Math.seed = function(val){
+		seed = val;
+	};
+})();
 
 if (typeof Object.create === 'undefined') {
 	Object.create = function (o) {
